@@ -64,6 +64,9 @@ public class ValueExtractorTest extends TestCase {
             testSimpleTabular = (TabularData) o;
             }
 
+        // Force a garbage collection so we get a valid GcObject below
+        System.gc();
+
         // lets find a registered gc mbean
         for (MemoryManagerMXBean gc : ManagementFactory
                 .getMemoryManagerMXBeans())
