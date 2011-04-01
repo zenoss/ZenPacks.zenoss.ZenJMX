@@ -54,8 +54,7 @@ jmx_args() {
 run() {
     exec java \
         ${JVM_ARGS} \
-        -cp ${CLASSPATH} \
-        ${MAIN_CLASS} \
+        -jar ${ZENJMX_JAR} \
         ${RUN_ARGS}
 }
 
@@ -63,8 +62,7 @@ runjmxenabled() {
     JVM_ARGS=`jmx_args`
     exec java \
         ${JVM_ARGS} \
-        -cp ${CLASSPATH} \
-        ${MAIN_CLASS} \
+        -jar ${ZENJMX_JAR} \
         ${RUN_ARGS}
 }
 
@@ -76,8 +74,7 @@ start() {
         JVM_ARGS=`jmx_args`
         eval exec java \
             ${JVM_ARGS} \
-            -cp ${CLASSPATH} \
-            ${MAIN_CLASS} \
+            -jar ${ZENJMX_JAR} \
             ${START_ARGS} > /dev/null 2>&1 &
         PID=$!
         echo $PID > $PIDFILE

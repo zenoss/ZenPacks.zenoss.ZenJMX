@@ -2,7 +2,7 @@
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
 NAME = "ZenPacks.zenoss.ZenJMX"
-VERSION = "3.5.4"
+VERSION = "3.6.0"
 AUTHOR = "Zenoss"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.zenoss']
@@ -52,7 +52,7 @@ setup(
     # previousZenPackName is a facility for telling Zenoss that the name
     # of this ZenPack has changed.  If no ZenPack with the current name is
     # installed then a zenpack of this name if installed will be upgraded.
-    prevZenPackName = PREV_ZENPACK_NAME, 
+    prevZenPackName = PREV_ZENPACK_NAME,
     
     # Indicate to setuptools which namespace packages the zenpack
     # participates in
@@ -67,9 +67,9 @@ setup(
     
     # Tell setuptools what non-python files should also be included
     # with the binary egg.
-    package_data = { 
+    package_data = {
          '': ['*.txt'],
-         },  
+         },
 
     # Indicate dependencies on other python modules or ZenPacks.  This line
     # is modified by zenoss when the ZenPack edit page is submitted.  Zenoss
@@ -86,5 +86,5 @@ setup(
     },
 
     # All ZenPack eggs must be installed in unzipped form.
-    zip_safe = False,    
+    zip_safe = False,
 )
