@@ -55,5 +55,7 @@ START_ARGS="--configfile ${CFGFILE} $@"
 RUN_ARGS="--configfile ${CFGFILE} $@"
 
 JMX_LISTEN_PORT=`awk '/^jmxremoteport/ { print $2; }' ${CFGFILE}`
+DEFAULT_ZENJMX_JVM_ARGS="${DEFAULT_ZENJMX_JVM_ARGS} -server ${JVM_MAX_HEAP}"
+JVM_ARGS="$DEFAULT_ZENJMX_JVM_ARGS"
 
 generic $@

@@ -59,7 +59,7 @@ run() {
 }
 
 runjmxenabled() {
-    JVM_ARGS=`jmx_args`
+    JVM_ARGS="${JVM_ARGS} `jmx_args`"
     exec java \
         ${JVM_ARGS} \
         -jar ${ZENJMX_JAR} \
@@ -71,7 +71,7 @@ start() {
         echo is already running
     else
         echo starting...
-        JVM_ARGS=`jmx_args`
+        JVM_ARGS="${JVM_ARGS} `jmx_args`"
         eval exec java \
             ${JVM_ARGS} \
             -jar ${ZENJMX_JAR} \

@@ -103,6 +103,9 @@ class ZenJMXPreferences(object):
                                default=5, type='int',
                                help='Number of ports to attempt when starting' +
                                     'Java jmx client')
+        parser.add_option('--javaheap',
+                            dest="maxHeap",type="int", default=512,
+                            help="Max heap, in MB, to use for java process")
                                
     def postStartup(self):
         pass
@@ -139,7 +142,8 @@ class ZenJMXJavaClientImpl(ProcessProtocol):
         self,
         args,
         cycle=True,
-        zenjmxjavaport=9988
+        zenjmxjavaport=9988,
+        maxHeap=512
         ):
         """
         Initializer
@@ -161,6 +165,7 @@ class ZenJMXJavaClientImpl(ProcessProtocol):
         self.args = args
         self.cycle = cycle
         self.listenPort = zenjmxjavaport
+        self._maxHeap = maxHeap
         self.restartEnabled = False
         self._eventService = zope.component.queryUtility(IEventService)
         self._preferences = zope.component.queryUtility(ICollectorPreferences,
@@ -277,7 +282,7 @@ class ZenJMXJavaClientImpl(ProcessProtocol):
         self.log.debug('run():spawn process %s' % (cmd, ))
         self.deferred = Deferred()
         self.process = reactor.spawnProcess(self, zenjmxjavacmd, cmd,
-                env=None)
+                env={'JVM_MAX_HEAP':'-Xmx%sm'%self._maxHeap})
         return self.deferred
 
 
@@ -314,9 +319,10 @@ class ZenJMXJavaClientInitialization(object):
         def loadPrefs():
             log.debug( "Retrieving java client startup args")
             preferences = zope.component.queryUtility(ICollectorPreferences,
-                                                      'zenjmx')
+                                                 'zenjmx')
             self._args = preferences.getJavaClientArgs()
             self._cycle = preferences.options.cycle
+            self._maxHeap = preferences.options.maxHeap
             self._startingPort = preferences.getStartingPort()
             self._rpcPort = self._startingPort
             self._attemptedPortRange = preferences.getAttemptedPortRange()
@@ -337,7 +343,7 @@ class ZenJMXJavaClientInitialization(object):
         """
         log.debug( 'Attempting java client startup on port %s',
                     self._rpcPort )
-        self._jmxClient = ZenJMXJavaClientImpl( self._args, self._cycle, self._rpcPort )
+        self._jmxClient = ZenJMXJavaClientImpl( self._args, self._cycle, self._rpcPort, self._maxHeap )
         return self._jmxClient.run()
 
     def _startJavaProc( self, result=None ):
