@@ -281,8 +281,10 @@ class ZenJMXJavaClientImpl(ProcessProtocol):
         cmd = (zenjmxjavacmd, ) + args
         self.log.debug('run():spawn process %s' % (cmd, ))
         self.deferred = Deferred()
+        env = dict(os.environ)
+        env['JVM_MAX_HEAP'] = '-Xmx%sm'%self._maxHeap
         self.process = reactor.spawnProcess(self, zenjmxjavacmd, cmd,
-                env={'JVM_MAX_HEAP':'-Xmx%sm'%self._maxHeap})
+                env=env)
         return self.deferred
 
 
