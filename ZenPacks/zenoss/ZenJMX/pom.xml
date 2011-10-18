@@ -14,7 +14,7 @@
 
   <url>http://www.zenoss.com/</url>
   <properties>
-    <version.jetty>7.2.1.v20101111</version.jetty>
+    <version.jetty>7.5.3.v20111011</version.jetty>
   </properties>
 
   <dependencies>
