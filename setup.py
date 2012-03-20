@@ -15,18 +15,6 @@ PREV_ZENPACK_NAME = "ZenJMX"
 
 from setuptools import setup, find_packages
 
-# setuptools will recognize platform-dependent eggs if you are
-# building the c code as a setuptool.Extension class within setup.py.
-# We are building from a makefile, so this automatic mechanism does not
-# work for us here.  Using a subclass of Distribution that overrides
-# has_ext_modules() to always return True works around this.
-# See Phillip J. Eby post to distutils-sig 2007-02-09 10:03 describing
-# this method.
-from setuptools.dist import Distribution
-class MyDist(Distribution):
-     def has_ext_modules(self):
-         return True
-
 # 'make build' will build the c extensions and copy those files
 # as well as decimal.py into the ZenPack's lib dir.
 import subprocess
