@@ -27,7 +27,7 @@ log = logging.getLogger( "zen.zenjmxconfigservices" )
 class RRDConfig(pb.Copyable, pb.RemoteCopy):
     """
     RRD configuration for a datapoint.
-    Contains the create command and the min and max 
+    Contains the create command and the min and max
     values for a datapoint
     """
     def __init__(self, dp):
@@ -39,14 +39,14 @@ class RRDConfig(pb.Copyable, pb.RemoteCopy):
         self.rrdType = dp.rrdtype
 
 pb.setUnjellyableForClass(RRDConfig, RRDConfig)
-    
+
 
 class JMXDeviceConfig(pb.Copyable, pb.RemoteCopy):
     """
     Represents the configuration for a device.
     Contains a list of JMXDataSourceConfig objects
     """
-    
+
     def __init__(self, device):
         self.id = device.id
         self.configId = device.id
@@ -60,14 +60,14 @@ class JMXDeviceConfig(pb.Copyable, pb.RemoteCopy):
         # intervals at some point.  For now, this
         # will be ignored at the collector.
         self.configCycleInterval = 5 * 60
-        
+
     def findDataSource(self, dataSourceId):
         for subList in self.jmxDataSourceConfigs.values():
             for dsConfig in subList:
                 if(dsConfig.datasourceId == dataSourceId):
                     return dsConfig
         return None
-        
+
     def add(self, jmxDataSourceConfig):
         """
         add a JMXDataSourceConfig to the device configuration
@@ -78,20 +78,20 @@ class JMXDeviceConfig(pb.Copyable, pb.RemoteCopy):
             configs = []
             self.jmxDataSourceConfigs[key] = configs
         configs.append(jmxDataSourceConfig)
-        
+
 pb.setUnjellyableForClass(JMXDeviceConfig, JMXDeviceConfig)
 
 
 class JMXDataSourceConfig(pb.Copyable, pb.RemoteCopy):
     """
-    Represents a JMX datasource configuration on a device. 
+    Represents a JMX datasource configuration on a device.
     """
 
     def __init__(self, device, component, template, datasource):
         self.device = device.id
         self.manageIp = device.manageIp
         self.datasourceId = datasource.id
-        if component is None:
+        if not component:
             self.component = datasource.getComponent(device)
             self.rrdPath = device.rrdPath()
             self.copyProperties(device, datasource)
@@ -127,16 +127,16 @@ class JMXDataSourceConfig(pb.Copyable, pb.RemoteCopy):
 
     def getJMXServerKey(self):
         """
-        string which represents the jmx server  and connection props. 
+        string which represents the jmx server  and connection props.
         Can be compared to determine if datasources configurations point to the
         same jmx server
         """
         return self.device + self.manageIp + self.getConnectionPropsKey()
-               
+
     def getConnectionPropsKey(self):
         """
-        string key which represents the connection properties that make up 
-        the connection properties for the datasource.  
+        string key which represents the connection properties that make up
+        the connection properties for the datasource.
         """
         # raw service URL is being used
         if self.jmxRawService:
@@ -149,9 +149,9 @@ class JMXDataSourceConfig(pb.Copyable, pb.RemoteCopy):
         if (self.authenticate):
             creds = self.username + self.password
             components.append( md5.new(creds).hexdigest() );
-        
+
         return ":".join(components)
-    
+
     def update(self, value):
         self.__dict__.update(value.__dict__)
 
@@ -159,7 +159,7 @@ pb.setUnjellyableForClass(JMXDataSourceConfig, JMXDataSourceConfig)
 
 
 class ZenJMXConfigService(CollectorConfigService):
-    """ZenHub service for getting ZenJMX configurations 
+    """ZenHub service for getting ZenJMX configurations
        from the object database"""
     def __init__(self, dmd, instance):
         attributes = ()
