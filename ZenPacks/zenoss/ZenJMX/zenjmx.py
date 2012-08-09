@@ -342,6 +342,11 @@ class ZenJMXJavaClientInitialization(object):
         log.debug( 'Attempting java client startup on port %s',
                     self._rpcPort )
         self._jmxClient = ZenJMXJavaClientImpl( self._args, self._cycle, self._rpcPort, self._maxHeap )
+        zope.component.provideUtility(
+                              self._jmxClient,
+                              IZenJMXJavaClient,
+                              self._clientName
+                              )
         return self._jmxClient.run()
 
     def _startJavaProc( self, result=None ):
@@ -357,11 +362,6 @@ class ZenJMXJavaClientInitialization(object):
             if result[0] is True:
                 log.debug( 'Java jmx client started' )
                 self._jmxClient.restartEnabled = True
-                zope.component.provideUtility(
-                                      self._jmxClient,
-                                      IZenJMXJavaClient,
-                                      self._clientName
-                                      )
                 deferred = defer.succeed( True )
             # If the result[0] is 10, there was a port conflict
             elif result[0] == 10:
