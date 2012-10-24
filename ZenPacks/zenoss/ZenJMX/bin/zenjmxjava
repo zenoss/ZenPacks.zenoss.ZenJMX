@@ -14,14 +14,22 @@ THISDIR=`dirname $MYPATH`
 PRGHOME=`dirname $THISDIR`
 PRGNAME=zenjmxjava
 
-
 ZENJMX_HOME=${PRGHOME}
 LIB_DIR=${ZENJMX_HOME}/lib
 
 CFGFILE=${ZENHOME}/etc/zenjmx.conf
-if [ ! -f ${CFGFILE} ]; then
-    cp ${LIB_DIR}/zenjmx.conf ${CFGFILE}
-fi
+
+ARGSTRING=$@
+ARGARRAY=($ARGSTRING)
+idx=0
+
+for argument in $ARGSTRING
+    do
+       	idx=`expr $idx + 1`
+       	case $argument in
+            --configfile) CFGFILE=${ARGARRAY[idx]} ;;
+       	esac
+    done
 
 MONITOR=`awk '/^monitor/ { print $2; }' ${CFGFILE}`
 if [ -z "${MONITOR}" ]; then
