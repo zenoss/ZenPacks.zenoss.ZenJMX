@@ -365,10 +365,11 @@ public class JmxClient {
         // marshal composite values into
         Map<String, Object> values = null;
 
-        if ( value instanceof CompositeDataSupport || value instanceof TabularData)
+        if ( value instanceof CompositeDataSupport 
+                || value instanceof TabularData
+                || value instanceof Map )
             {
             values = mapValues(value, keys);
-            
             }
         // if the attribute wasn't multi-value just return the attribute
         else
@@ -382,25 +383,22 @@ public class JmxClient {
         }
 
     private Map<String, Object> mapValues(Object obj, List<String> dataPointKeys)
-            throws JmxException
         {
         HashMap<String, Object> values = new HashMap<String, Object>();
         for (String dataPoint : dataPointKeys)
             {
             try
                 {
+                _logger.debug(
+                    "Extracting value for datapoint '" + dataPoint + "'");
                 Object value = ValueExtractor.getDataValue(obj, dataPoint);
                 values.put(dataPoint, value);
                 }
-            catch (JmxException jmxe)
+            catch (Exception e)
                 {
-                _logger.warn("no value found for datapoint " + dataPoint + "; "
-                        + jmxe.getMessage());
-                }
-            catch (InvalidKeyException ike)
-                {
-                _logger.warn("no value found for datapoint " + dataPoint + "; "
-                        + ike.getMessage());
+                _logger.warn(
+                    "Failed to extract value for datapoint '" 
+                    + dataPoint + "'; " + e.getMessage());
                 }
             }
         return values;

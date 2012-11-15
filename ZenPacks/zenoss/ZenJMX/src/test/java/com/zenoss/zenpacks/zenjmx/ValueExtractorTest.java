@@ -12,6 +12,8 @@ import javax.management.openmbean.TabularData;
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ValueExtractorTest extends TestCase {
 
@@ -193,6 +195,20 @@ public class ValueExtractorTest extends TestCase {
             return;
             }
         fail("expected an exception");
+        }
+
+    public void testMapData() throws Exception
+        {
+        if ( !isOneSix )
+            {
+            return;
+            }
+        Map map = new HashMap<String, Integer>();
+        map.put("a", 1);
+        map.put("b", 2);
+        map.put("c", 3);
+        Object v = ValueExtractor.getDataValue(map, "b");
+        assertEquals(2, v);
         }
 
     public void testSplit() throws Exception

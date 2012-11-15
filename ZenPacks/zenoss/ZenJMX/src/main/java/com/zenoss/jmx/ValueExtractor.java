@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.management.openmbean.CompositeData;
@@ -55,7 +56,7 @@ public class ValueExtractor {
      * column not used for the index.
      * 
      * @param obj
-     *            TabularData or CompositeData
+     *            TabularData, CompositeData, or Map
      * @param path
      *            dot separated string that represents a path through the object
      * @return Object the value at the end of the path
@@ -65,7 +66,9 @@ public class ValueExtractor {
     public static Object getDataValue(final Object obj, String path)
             throws JmxException
         {
-        if ( !(obj instanceof TabularData) && !(obj instanceof CompositeData) )
+        if ( !(obj instanceof TabularData)
+                && !(obj instanceof CompositeData)
+                && !(obj instanceof Map) )
             {
 
             throw new IllegalArgumentException("Cannot process object of type "
@@ -143,6 +146,12 @@ public class ValueExtractor {
                     CompositeData cData = (CompositeData) currentObj;
                     currentObj = getData(cData, currentKey);
                     }
+                else if ( currentObj instanceof Map )
+                    {
+                    _logger.debug("getDataValue: dealing with Map");
+                    Map mData = (Map) currentObj;
+                    currentObj = getData(mData, currentKey);
+                    }
                 else
                     {
                     // we still have a path but the object isn't composite or
@@ -183,9 +192,18 @@ public class ValueExtractor {
     private static Object getData(CompositeData cData, String key)
         {
         _logger.debug("composite data is: " + cData);
-        _logger.debug("getting " + key + " from composite data");
+        _logger.debug("getting '" + key + "' from composite data");
         Object result = cData.get(key);
         _logger.debug("value from composite data is " + result);
+        return result;
+        }
+
+    private static Object getData(Map mData, String key)
+        {
+        _logger.debug("map data is: " + mData);
+        _logger.debug("getting '" + key + "' from map data");
+        Object result = mData.get(key);
+        _logger.debug("value from map data is " + result);
         return result;
         }
 

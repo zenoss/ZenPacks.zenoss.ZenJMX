@@ -503,6 +503,7 @@ class ZenJMXTask(ObservableMixin):
             """
             result = {}
             for result in jmxResults:
+                log.debug("JMX result -> %s", result)
                 evtSummary = result.get('summary')
                 deviceId = result.get('device')
                 evt = self.createEvent(result)
