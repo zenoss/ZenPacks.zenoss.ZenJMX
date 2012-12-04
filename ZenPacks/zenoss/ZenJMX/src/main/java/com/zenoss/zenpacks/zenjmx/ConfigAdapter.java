@@ -37,6 +37,8 @@ public class ConfigAdapter {
     public static final String EVENT_CLASS = "eventClass";
     public static final String COMPONENT_KEY = "component";
     public static final String RRD_PATH = "rrdPath";
+    public static final String CONNECTION_KEY = "connectionKey";
+
 
     
     public static final String DELIMITER = ",";
@@ -175,7 +177,10 @@ public class ConfigAdapter {
         return types;
     }
     
-    
+    public String getConnectionKey(){
+        return (String) configMap.get(CONNECTION_KEY);
+    }
+
     // rmiContext=jmxrmi}
     // dps=[Ljava.lang.Object;@9a6087,
     // dptypes=[Ljava.lang.Object;@37504d,

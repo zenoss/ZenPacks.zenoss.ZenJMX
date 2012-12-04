@@ -1,16 +1,17 @@
 /*****************************************************************************
- * 
+ *
  * Copyright (C) Zenoss, Inc. 2008, all rights reserved.
- * 
+ *
  * This content is made available according to terms specified in
  * License.zenoss under the directory where your Zenoss product is installed.
- * 
+ *
  ****************************************************************************/
 
 
 package com.zenoss.zenpacks.zenjmx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -67,6 +68,10 @@ public class ZenJmxService {
       _concurrentServerCalls = concurrent;
       ConfigAdapter config = null;
       for (Map<?, ?> configMap : dataSourceConfigs) {
+        if (_logger.isDebugEnabled()) {
+          String configMsg = Arrays.toString(configMap.entrySet().toArray());
+          _logger.debug("processing " + configMsg );
+        }
         config = new ConfigAdapter(configMap);
         _configs.add(config);
       }
@@ -84,8 +89,7 @@ public class ZenJmxService {
 
     /**
      * collects jmx values and returns a list of results.
-     * 
-     * @param dsConfigs
+     *
      * @return
      */
     public List<Map<String, String>> collect() {
@@ -93,29 +97,34 @@ public class ZenJmxService {
       JmxClient client = null;
 
       try {
-        client = createJmxClient();
-        client.connect();
-        result.addAll(doCollect(client));
+          client = createJmxClient();
+
+          client.connect();
+          result.addAll(doCollect(client));
+      } catch (JmxException e) {
+          String msg = "Error Connecting to Server ";
+          Map<String, String> error = createDeviceConnectionError(this._config, msg, e);
+          result.add(error);
       } catch (Throwable e) {
-        for(ConfigAdapter config : _configs)
-            {
-            Map<String, String> error = createConnectionError(config,
-                    "error connecting to server", e);
+            Map<String, String> error = createUnexpectedError(this._config, e);
             result.add(error);
-            }
 
       } finally {
         if (client != null) {
           try {
             client.close();
           } catch (JmxException e) {
-          for(ConfigAdapter config : _configs)
-              {
-              Map<String, String> error = createConnectionError(config, 
+              Map<String, String> error = createDeviceConnectionError(this._config,
                       "error closing connection to server", e);
               result.add(error);
-              }
           }
+        }
+      }
+      if (_logger.isDebugEnabled()) {
+        for (Map<String, String> r: result){
+          Map.Entry[] entries = r.entrySet().toArray(new Map.Entry[0]);
+          String msg = Arrays.toString(entries);
+          _logger.debug("returning " + msg);
         }
       }
       return result;
@@ -157,7 +166,7 @@ public class ZenJmxService {
               }
             }
 
-            
+
           };
           // submit job to be run
           es.execute(job);
@@ -192,7 +201,7 @@ public class ZenJmxService {
       return jmxClient;
     }
 
-    private List<Map<String, String>> createResult(Summary summary, 
+    private List<Map<String, String>> createResult(Summary summary,
             ConfigAdapter config) {
       if (_logger.isDebugEnabled()) {
         _logger.debug(summary.toString());
@@ -236,6 +245,15 @@ public class ZenJmxService {
       return error;
     }
 
+
+    private HashMap<String, String> createDeviceError(ConfigAdapter config, String msg) {
+        HashMap<String, String> error = new HashMap<String, String>();
+
+        populateEventFields(error, config, true);
+        error.put(SUMMARY, msg);
+
+        return error;
+      }
     private HashMap<String, String> createError(ConfigAdapter config, String msg) {
       HashMap<String, String> error = new HashMap<String, String>();
 
@@ -245,16 +263,31 @@ public class ZenJmxService {
       return error;
     }
 
-    private Map<String, String> createConnectionError(ConfigAdapter config,
-        String msg, Throwable e) {
+    private Map<String, String> createDeviceConnectionError(ConfigAdapter config,
+                                                            String msg, Throwable e) {
 
       Utility.debugStack(e);
-      String errorMsg = "DataSource %1$s; %2$s; Exception %3$s ";
-      errorMsg = String.format(errorMsg, config.getDatasourceId(), msg, 
-              e.getMessage());
-      HashMap<String, String> error = createError(config, errorMsg);
-      
+
+      String errorMsg = "%1$s; %2$s ";
+      errorMsg = String.format(errorMsg, msg, e.getMessage());
+      HashMap<String, String> error = createDeviceError(config, errorMsg);
+
       error.put(ConfigAdapter.EVENT_CLASS, "/Status/JMX/Connection");
+      //Make sure the connection error has the connection key so that they dedup
+      error.put(ConfigAdapter.EVENT_KEY, config.getConnectionKey());
+      return error;
+    }
+
+    private Map<String, String> createUnexpectedError(ConfigAdapter config,
+                                                      Throwable e) {
+      String msg = "Unexpected Error";
+      Utility.debugStack(e);
+      String errorMsg = "%1$s; Exception %3$s ";
+      errorMsg = String.format(errorMsg, msg,e.getMessage());
+      HashMap<String, String> error = createDeviceError(config, errorMsg);
+      error.put(ConfigAdapter.EVENT_CLASS, "/Status/JMX");
+      error.put(ConfigAdapter.EVENT_KEY, "unexpected_error");
+
       return error;
     }
 
@@ -266,22 +299,29 @@ public class ZenJmxService {
       HashMap<String, String> error = createError(config, msg);
       return error;
     }
-    
-    private void populateEventFields(Map<String,String> evt, 
-            ConfigAdapter config)
+
+    private void populateEventFields(Map<String,String> evt,
+            ConfigAdapter config){
+        this.populateEventFields(evt, config, false);
+    }
+
+    private void populateEventFields(Map<String,String> evt,
+            ConfigAdapter config, boolean deviceOnly)
         {
         evt.put(ConfigAdapter.DEVICE, config.getDevice());
-        evt.put(ConfigAdapter.DATASOURCE_ID, config.getDatasourceId());
         evt.put(ConfigAdapter.EVENT_CLASS, config.getEventClass());
-        String eventKey = config.getEventKey();
-        if (eventKey == null || "".equals(eventKey.trim()))
-            {
-            //narrow down events to a datasource so that they can be cleared
-            eventKey = config.getDatasourceId();
+        if (!deviceOnly){
+            evt.put(ConfigAdapter.DATASOURCE_ID, config.getDatasourceId());
+            String eventKey = config.getEventKey();
+            if (eventKey == null || "".equals(eventKey.trim()))
+                {
+                //narrow down events to a datasource so that they can be cleared
+                eventKey = config.getDatasourceId();
+                }
+            evt.put(ConfigAdapter.EVENT_KEY, eventKey);
+            evt.put(ConfigAdapter.COMPONENT_KEY, config.getComponent());
+            evt.put(ConfigAdapter.RRD_PATH, config.getRrdPath());
             }
-        evt.put(ConfigAdapter.EVENT_KEY, eventKey);
-        evt.put(ConfigAdapter.COMPONENT_KEY, config.getComponent());
-        evt.put(ConfigAdapter.RRD_PATH, config.getRrdPath());
         }
   }
 

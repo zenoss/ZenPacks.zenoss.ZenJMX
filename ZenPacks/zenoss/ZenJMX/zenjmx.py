@@ -478,6 +478,7 @@ class ZenJMXTask(ObservableMixin):
                 vals['dps'].append(rrdConfig.dataPointId)
                 vals['dptypes'].append(rrdConfig.rrdType)
 
+            vals['connectionKey'] = config.getConnectionPropsKey()
             return vals
 
         def rpcCall():
@@ -502,6 +503,8 @@ class ZenJMXTask(ObservableMixin):
             @type jmxResults: string
             """
             result = {}
+            hasConnectionError = False
+            hasUnexpectedError = False
             for result in jmxResults:
                 log.debug("JMX result -> %s", result)
                 evtSummary = result.get('summary')
@@ -516,21 +519,34 @@ class ZenJMXTask(ObservableMixin):
                         self.storeRRD(deviceId, rrdPath, dsId, dpId, value)
                     except ValueError:
                         pass
-                    self.sendEvent({}, severity=Event.Clear,
-                        eventClass='/Status/JMX/Connection',
-                        summary='Connection is up',
-                        eventKey=result.get('eventKey'),
-                        component=result.get('component'),
-                        device=deviceId)
                     self.sendEvent(evt,summary="Clear",severity=Event.Clear)
-
                 else:
                     # send event
                     log.debug('processResults(): '
                                     + 'jmx error, sending event for %s'
                                     % result)
+                    if evt.get("eventClass", "") == '/Status/JMX/Connection':
+                        hasConnectionError = True
+                    if evt.get("eventKey", "") == 'unexpected_error':
+                        hasUnexpectedError = True
 
                     self.sendEvent(evt, severity=Event.Error)
+
+            if not hasConnectionError:
+                self.sendEvent({}, severity=Event.Clear,
+                    eventClass='/Status/JMX/Connection',
+                    summary='Connection is up',
+                    eventKey=connectionComponentKey,
+                    device=self.configId)
+            if not hasUnexpectedError:
+                self.sendEvent({}, severity=Event.Clear,
+                    eventClass='/Status/JMX',
+                    summary='Unexpected error cleared',
+                    eventKey='unexpected_error',
+                    device=self.configId)
+
+
+
             return jmxResults
 
         connectionComponentKey = ''
