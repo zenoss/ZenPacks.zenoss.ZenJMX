@@ -8,20 +8,21 @@
 ##############################################################################
 
 
+import logging
 import md5
 
 import Globals
-import logging
-from Products.ZenHub.services.PerformanceConfig import PerformanceConfig
 from Products.ZenUtils.ZenTales import talesEval
-from Products.ZenEvents.Exceptions import pythonThresholdException
 from Products.ZenEvents.ZenEventClasses import Error, Clear
 from Products.ZenCollector.services.config import CollectorConfigService
 
 from ZenPacks.zenoss.ZenJMX.datasources.JMXDataSource import JMXDataSource
 
 from twisted.spread import pb
+
 log = logging.getLogger( "zen.zenjmxconfigservices" )
+
+
 class RRDConfig(pb.Copyable, pb.RemoteCopy):
     """
     RRD configuration for a datapoint.
@@ -167,7 +168,6 @@ class ZenJMXConfigService(CollectorConfigService):
                                         attributes)
         self._ds_errors = {}
 
-
     def _get_ds_conf(self, device, component, template, ds):
         component_id = None if (component is None) else component.id
         ds_error_key = (device.id, component_id, template.id, ds.id)
@@ -195,7 +195,6 @@ class ZenJMXConfigService(CollectorConfigService):
             self.log.error(msg)
 
         return ds_conf
-
 
     def _createDeviceProxy(self, device):
         deviceConfig = JMXDeviceConfig(device)
@@ -231,3 +230,15 @@ class ZenJMXConfigService(CollectorConfigService):
             datasources.append(ds)
 
         return datasources
+
+
+if __name__ == '__main__':
+    from Products.ZenHub.ServiceTester import ServiceTester
+    tester = ServiceTester(ZenJMXConfigService)
+    def printer(proxy):
+        print '\t'.join( ['', 'Hostname', 'Service name', 'Port'] )
+        for component, config in proxy.jmxDataSourceConfigs.items():
+            print '\t', component
+    tester.printDeviceProxy = printer
+    tester.showDeviceInfo()
+

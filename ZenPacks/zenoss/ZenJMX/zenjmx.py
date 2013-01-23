@@ -14,20 +14,16 @@ __doc__ = """Monitor Java Management eXtension (JMX) mbeans
 Dispatches calls to a java server process to collect JMX values for a device.
 """
 import logging
-import time
 import sys
 import os
 import socket
 import Globals
 import zope
-import time
 
 from twisted.internet.defer import Deferred
 from twisted.web import xmlrpc
-from twisted.python import failure
 from twisted.internet.protocol import ProcessProtocol
-from twisted.python.failure import Failure
-from twisted.internet import defer, reactor
+from twisted.internet import defer, reactor, error
 
 from Products.ZenCollector.daemon import CollectorDaemon
 from Products.ZenCollector.interfaces import ICollectorPreferences,\
@@ -39,13 +35,14 @@ from Products.ZenCollector.tasks import SimpleTaskFactory,\
                                         TaskStates
 from Products.ZenEvents import Event
 from Products.ZenHub.XmlRpcService import XmlRpcService
-from Products.ZenRRD.Thresholds import Thresholds
 from Products.ZenUtils.NJobs import NJobs
-from Products.ZenUtils.Utils import binPath, unused
+from Products.ZenUtils.Utils import unused
 from Products.ZenUtils.observable import ObservableMixin
 import ZenPacks.zenoss.ZenJMX
 
 from ZenPacks.zenoss.ZenJMX.services.ZenJMXConfigService import JMXDataSourceConfig
+
+unused(JMXDataSourceConfig)
 
 log = logging.getLogger( "zen.zenjmx" )
 DEFAULT_HEARTBEAT_TIME = 5 * 60
@@ -198,7 +195,6 @@ class ZenJMXJavaClientImpl(ProcessProtocol):
             elif self.restartEnabled:
                 self.log.info('processEnded():restarting zenjmxjava')
                 reactor.callLater(1, self.run)
-
 
     def stop(self):
         """
@@ -603,7 +599,7 @@ class ZenJMXTask(ObservableMixin):
         dpPath = '/'.join((rrdPath, rrdConf.dpName))
         min = rrdConf.min 
         max = rrdConf.max
-        value = self._dataService.writeRRD(dpPath, dpValue, rrdConf.rrdType,
+        self._dataService.writeRRD(dpPath, dpValue, rrdConf.rrdType,
                               rrdConf.command, min=min, max=max)
 
     def _finished(self, results):

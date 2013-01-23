@@ -11,10 +11,11 @@
 pack = 'ZenJMX'
 __doc__ = '%s ZenPack.  Adds JMX support to Zenoss' % pack
 
-import Globals
 import os
 import sys
-from os.path import join
+
+import Globals
+
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.CMFCore.DirectoryView import registerDirectory
 
@@ -36,3 +37,4 @@ class ZenPack(ZenPackBase):
         ('zJmxUsername', 'admin', 'string'),
         ('zJmxPassword', 'admin', 'password'),
         ]
+
