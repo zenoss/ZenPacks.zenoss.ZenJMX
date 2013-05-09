@@ -35,7 +35,7 @@ class JMXDataSource(ZenPackPersistence, Base):
     timeout = 15
     eventClass = '/Status/JMX'
     component = JMX
-    protocolTypes  = ['RMI', 'JMXMP']
+    protocolTypes  = ['REMOTING-JMX', 'RMI', 'JMXMP']
     hostname = '${dev/id}'
     expectedIpAddress = ''
 

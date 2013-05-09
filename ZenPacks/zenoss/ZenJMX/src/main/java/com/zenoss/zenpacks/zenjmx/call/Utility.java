@@ -21,7 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import com.zenoss.jmx.JmxException;
 import com.zenoss.zenpacks.zenjmx.ConfigAdapter;
 
-
 /**
  * <p> Commonly used methods.  </p>
  *
@@ -85,6 +84,8 @@ public class Utility {
         url = "service:jmx:";
         if (protocol.equals("JMXMP"))
             url += "jmxmp://" + hostAddr + ":" + port;
+        else if (protocol.equals("REMOTING-JMX"))
+            url += "remoting-jmx://" + hostAddr + ":" + port;
         else
             url += "rmi:///jndi/rmi://" + hostAddr + ":" + port + "/"+ rmiContext;
     }

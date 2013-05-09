@@ -21,7 +21,7 @@ def jmxProtocolVocabulary(context):
 class JMXDataSourceInfo(RRDDataSourceInfo):
     implements(IJMXDataSourceInfo)
     
-    # JMX RMI
+    # JMX RMI REMOTING-JMX
     jmxPort = ProxyProperty('jmxPort')
     jmxProtocol = ProxyProperty('jmxProtocol')
     jmxRawService = ProxyProperty('jmxRawService')

@@ -142,7 +142,7 @@ class JMXDataSourceConfig(pb.Copyable, pb.RemoteCopy):
             return self.jmxRawService
 
         components = [self.jmxProtocol]
-        if self.jmxProtocol == "RMI":
+        if self.jmxProtocol in ["RMI", "REMOTING-JMX"]:
             components.append(self.rmiContext)
         components.append(str(self.jmxPort))
         if (self.authenticate):

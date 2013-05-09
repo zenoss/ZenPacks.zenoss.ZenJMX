@@ -51,7 +51,8 @@ jmx_args() {
 run() {
     exec java \
         ${JVM_ARGS} \
-        -jar ${ZENJMX_JAR} \
+        -cp "./*:$ZENHOME/zenjmx-libs/*:${CLASSPATH}" \
+        com.zenoss.zenpacks.zenjmx.ZenJmxMain \
         ${RUN_ARGS}
 }
 
@@ -59,7 +60,8 @@ runjmxenabled() {
     JVM_ARGS="${JVM_ARGS} `jmx_args`"
     exec java \
         ${JVM_ARGS} \
-        -jar ${ZENJMX_JAR} \
+        -cp "./*:$ZENHOME/zenjmx-libs/*:${CLASSPATH}" \
+        com.zenoss.zenpacks.zenjmx.ZenJmxMain \
         ${RUN_ARGS}
 }
 
@@ -71,7 +73,8 @@ start() {
         JVM_ARGS="${JVM_ARGS} `jmx_args`"
         eval exec java \
             ${JVM_ARGS} \
-            -jar ${ZENJMX_JAR} \
+            -cp "./*:$ZENHOME/zenjmx-libs/*:${CLASSPATH}" \
+            com.zenoss.zenpacks.zenjmx.ZenJmxMain \
             ${START_ARGS} > /dev/null 2>&1 &
         PID=$!
         echo $PID > $PIDFILE

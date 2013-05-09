@@ -38,3 +38,9 @@ class ZenPack(ZenPackBase):
         ('zJmxPassword', 'admin', 'password'),
         ]
 
+    def install(self,app):
+        if not os.path.exists(os.environ['ZENHOME'] +'/zenjmx-libs'):
+            print "Creating %s" % os.environ['ZENHOME'] +'/zenjmx-libs'
+            os.makedirs(os.environ['ZENHOME'] +'/zenjmx-libs')
+
+        super(ZenPack, self).install(app)
