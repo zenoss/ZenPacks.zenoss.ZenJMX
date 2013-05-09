@@ -6,8 +6,8 @@ VERSION = "3.11.0"
 AUTHOR = "Zenoss"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.zenoss']
-INSTALL_REQUIRES = []
-COMPAT_ZENOSS_VERS = ""
+INSTALL_REQUIRES = [Zenoss >= 2.5.70]
+COMPAT_ZENOSS_VERS = "">=2.5.70"
 PREV_ZENPACK_NAME = "ZenJMX"
 # STOP_REPLACEMENTS
 ################################
