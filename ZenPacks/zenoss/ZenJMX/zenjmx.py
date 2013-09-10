@@ -62,6 +62,7 @@ class ZenJMXPreferences(object):
         values for needed attributes.
         """
         self.collectorName = "zenjmx"
+        self.defaultRRDCreateCommand = None
         self.cycleInterval = 5 * 60 # seconds
         self.configCycleInterval = 20 # minutes
         self.options = None
