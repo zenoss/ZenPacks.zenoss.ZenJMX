@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e494"><title>Single parameter in polymorphic operation</title><refbody><section><p>MBeans are implemented as Java classes and Java permits
+        parameterized polymorphic behavior. This means that multiple methods
+        can be defined with the same name so long as their parameter
+        signatures differ. You can safely define "getBalance(String)" and
+        "getBalance()" and the two exist as separate methods.</p><p>In order to properly resolve methods with the same name the
+        caller must provide a Class[] that lists the types of parameters that
+        exist in the method's signature. This resolves the candidate methods
+        to an individual method which can then be invoked by passing an
+        Object[].</p>
+  <p>The <cmdname>zenjmx</cmdname> daemon allows you to resolve methods of the same name and asks
+        you to provide the fully qualified class names of each parameter in
+        comma delimited format when you set up the data source. Note that
+        primitive types (String, Boolean, Integer, Float) are supported but
+        complex types are not supported, and that you must include the class'
+        package name when providing the information (java.lang.String).</p><p>The Object[] of parameter values must line up with Class[] of
+        parameter types, and if there is a mismatch in the number of types and
+        values that are provided an exception will be generated.</p><p>The marshaling of values from String to Boolean, Integer, and
+        Float types is provided via the .valueOf() static method on each of
+        those types. That is, if you define an attribute of type
+        java.lang.Integer you must provide a String that can be successfully
+        passed to java.lang.Integer.fromValue(). If you fail to do so an
+        exception is generated.</p><p>This example illustrates how to pass a single parameter to a
+        polymorphic operation:</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBalances()</p>
+          </li>
+
+          <li>
+            <p>Paramater Types: java.lang.Integer</p>
+          </li>
+
+          <li>
+            <p>Parameter Values: 1234</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>balance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul><p>Here is another example where we've changed the type of the
+        parameter passed to the method to be a String. Semantically it
+        represents a different type of Account in our example:</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBalances()</p>
+          </li>
+
+          <li>
+            <p>Paramater Types: java.lang.String</p>
+          </li>
+
+          <li>
+            <p>Parameter Values: sbb552349999</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>balance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul></section></refbody></reference>

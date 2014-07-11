@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:task" "task.dtd">
+<task id="d66e840"><title>Configure <ph conkeyref="names/platform"/> with a Custom Data Source</title><taskbody><context><p>Custom JMX data sources allow system administrators to monitor any
+      attribute or operation result accessible via a JMX call. This ZenPack creates
+      a <codeph outputclass="literal">JMX</codeph> data source and allows you to provide object
+      information, as well as authentication settings, and attribute/operation
+      information. Determining which object and attribute names, as well as
+      which operations to invoke, is the key to customizing this feature.</p><p>To configure the system with a custom data source:</p></context><steps-informal><ol>
+        <li>
+          <p>Select Infrastructure from the navigation bar.</p>
+        </li>
+
+        <li>
+          <p>Click the device in the device list.</p>
+
+          <p>The device overview page appears.</p>
+        </li>
+
+        <li>
+          <p>Expand Monitoring Templates in the left panel, and then select
+          Device.</p>
+        </li>
+
+        <li>
+          <p>Select Add Local Template from the Action menu.</p>
+
+          <p>The Add Local Template dialog appears.</p>
+        </li>
+
+        <li>
+          <p>Enter a name for the template (such as JVM Values), and then
+          click <b>Submit</b>.</p>
+
+          <p>The template is added.</p>
+        </li>
+
+        <li>
+          <p>Select the newly created template.</p>
+        </li>
+
+        <li>
+          <p>Click <!-- inlinemediaobject: images/screens/add_button.png--> Add in the Data Sources
+            area.</p>
+
+          <p>The Add Data Source dialog appears.</p>
+        </li>
+
+        <li>
+          <p>Enter a name for the data source (Heap Memory), select JMX as
+          the type, and then click Submit.</p>
+
+          <p>The data source is added.</p>
+        </li>
+
+        <li>
+          <p>Double-click the data source to edit it. Change options as
+          needed, and then click <b>Save</b>.</p>
+
+          <table>
+            <title>Memory Head Example ZenJMX Data Source Options</title>
+
+            <tgroup align="left" cols="2">
+              <colspec colname="c1" colwidth="1*"/>
+              <colspec colname="c2" colwidth="4*"/>
+              <thead>
+                <row>
+                  <entry>Option</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>Protocol</entry>
+
+                  <entry>RMI or JMXMP. Consult your Java application
+                  documentation to determine which JMX Connector protocols it
+                  supports.</entry>
+                </row>
+
+                <row>
+                  <entry><p>JMX Management Port</p></entry>
+
+                  <entry><p>This is not necessarily the same as the listen
+                  port for your server.</p></entry>
+                </row>
+
+                <row>
+                  <entry><p>Object Name</p></entry>
+
+                  <entry><p>The Object Name is also referred to as the
+                  MBean name. Enter
+                  <codeph outputclass="code">java.lang:type=Memory</codeph></p></entry>
+                </row>
+
+                <row>
+                  <entry><p>Attribute Name</p></entry>
+
+                  <entry><p>Enter
+                  <codeph outputclass="code">HeapMemoryUsage</codeph></p></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </li>
+
+        <li>
+          <p>Add data points named <codeph outputclass="literal">committed</codeph>,
+          <codeph outputclass="literal">max</codeph>, and <codeph outputclass="literal">used</codeph>:</p>
+
+          <ol>
+            <li>
+              <p>Select Add Data Point from the Action menu.</p>
+
+              <p>The Add Data Point dialog appears.</p>
+            </li>
+
+            <li>
+              <p>Enter the name of the data point
+              (<codeph outputclass="literal">committed</codeph>, <codeph outputclass="literal">max</codeph>, or
+              <codeph outputclass="literal">used</codeph>) and then click <b>Submit</b>.</p>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <p>After adding all data points, add graphs that reference
+          them.</p>
+        </li>
+      </ol></steps-informal><result><p>Review  to learn how to
+      determine the object name, attribute name, and data points that might be
+      interesting in your application.</p></result></taskbody></task>

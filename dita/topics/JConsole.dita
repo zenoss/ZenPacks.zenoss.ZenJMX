@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e1135"><title>Using JConsole to Query a JMX Agent</title><refbody><section><p><cmdname>JConsole</cmdname> is a tool built into the JDK that allows
+    system administrators to query a JMX Agent and examine the MBeans deployed
+    within the server. <cmdname>JConsole</cmdname> also allows administrators
+    to view JVM summary information, including the amount of time the JVM has
+    been running, how many threads are active, how much memory is currently
+    used by the heap, how many classes are currently loaded, and how much
+    physical memory exists on the machine.</p><p><cmdname>JConsole</cmdname> also provides a graph that shows memory,
+    thread, and class usage over time. The scale of the graph can be adjusted
+    so that a system administrator can examine a specific period of time, or
+    can zoom out to view a longer range picture of usage. Unfortunately,
+    <cmdname>JConsole</cmdname> can only produce graphs that show usage while
+    <cmdname>JConsole</cmdname> was running. Administrators cannot look back
+    in time to a point where the JVM was running but
+    <cmdname>JConsole</cmdname> was not monitoring the JVM.</p><fig>
+      <title>JMX Heap Graph</title>
+        <image href="../images/jmx-heapgraph.png" width="5in" scalefit="yes"/>
+    </fig><p>The <uicontrol outputclass="guilabel">MBeans</uicontrol> tab along the top of
+    <cmdname>JConsole</cmdname> provides an interactive method for examining
+    MBean values. After clicking on the <uicontrol outputclass="guilabel">MBeans</uicontrol> tab a
+    panel will be displayed with a tree on the left hand side. The tree
+    contains a hierarchical list of all MBeans deployed in the JVM.</p><p>The standard JVM MBeans are all in the java.lang and
+    java.util.logging packages. Application server specific MBeans do not
+    follow any standard naming pattern. Some vendors choose to use package
+    names for their MBean names while other vendors choose package-like names
+    (but not fully qualified packages).</p><p>To get started expand the java.lang node in the Tree. This will
+    expose several MBeans as well as additional folders. Click on the Memory
+    MBean and observe how the right hand side of the panel is populated with
+    information about the Memory MBean.</p><fig>
+      <title>Memory MBean</title>
+      <image href="../images/jmx-memorymbean.png" width="5in" scalefit="yes"/>
+    </fig><p>MBeans can contain attributes and operations. MBeans can also fire
+    notifications to observers, but that's beyond the scope of this document.
+    The attributes tab lists all of the attributes in the first column and
+    their values (or a clickable attribute type) in the second column. In the
+    case of Memory the HeapMemoryUsage is a Composite attribute, otherwise
+    referred to as a "complex-value attribute" in <ph conkeyref="names/platform"/>. Double click the
+    "javax.management.openmbean.CompositeDataSupport" type and you will see
+    multiple attributes appear. The show the amount of committed, maximum, and
+    used memory sizes for the heap.</p><fig>
+      <title>Memory MBean Expanded</title>
+      <image href="../images/jmx-memorymbeanexpanded.png" width="5in" scalefit="yes"/>
+    </fig><p>The unique name of the MBean can be viewed by clicking on the Info
+    tab. The first value is MBean Name. Its value in the case of Memory is:
+    "java.lang:type=Memory."</p><note>
+      <p>There is no standardized way to name MBeans; application server
+      vendors name them differently.</p>
+    </note><p>You can also examine operation information by clicking on the
+    Operations tab. These are methods that <cmdname>JConsole</cmdname> can
+    remotely invoke on an MBean that will result in some value being computed
+    or some state changing in the application. The Threading MBean has several
+    operations that can be invoked that return information. Click on the
+    java.lang package and then click on the Threading operation. Lastly, click
+    on the Operations tab. Methods like "getThreadUserTime" are
+    invocable.</p><fig>
+      <title>Operations Tab</title>
+        <image href="../images/jmx-operation.png" width="5in" scalefit="yes"/>
+    </fig><p>Test the "getThreadUserTime" method by changing the p0 parameter to
+    1 and clicking the "getThreadUserTime" button. A dialog window will be
+    raised that displays the amount of CPU user time thread #1 has used. Try
+    adjusting the parameter to different values to observe the different CPU
+    times for the threads.</p></section></refbody></reference>

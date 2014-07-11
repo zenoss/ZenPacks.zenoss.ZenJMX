@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e752"><title>Oracle Java Runtime Environment (JRE)</title><refbody><section>
+    <p>This ZenPack requires Oracle JRE Version 5.0 or higher. Make sure that after you install the
+                JRE you update your PATH such that the <cmdname>java</cmdname> executable works. You
+                can test this using the command:</p><codeblock outputclass="screen">$ which java
+/usr/java/default/bin/java</codeblock><p>If the above returns a fully qualified path, then you have
+    successfully installed Java.</p><p>If Java is not installed, the <cmdname>which</cmdname> will return a
+    message similar to the following:</p><codeblock outputclass="screen">$ which java
+/usr/bin/which: no java in (/usr/local/bin:/bin:/usr/bin:/opt/zenoss/bin)</codeblock><p>To determine which version of Java is installed, run the following
+    command:</p><codeblock outputclass="screen">$ java -version
+java version "1.5.0_16"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_16-b06-284)
+Java HotSpot(TM) Client VM (build 1.5.0_16-133, mixed mode, sharing)</codeblock>
+    <note type="warning">
+      <p>Oracle Java is required. Other Java implementations do not work.</p>
+    </note></section></refbody></reference>

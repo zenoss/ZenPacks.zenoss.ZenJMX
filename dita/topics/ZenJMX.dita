@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="referenceid">
+  <title>(ZenJMX) Java Management Extensions</title>
+  <shortdesc>The <zenpack>ZenPacks.zenoss.ZenJMX</zenpack> ZenPack adds the <cmdname>zenjmx</cmdname> daemon, 
+    which communicates with remote Java Management
+    Extensions (JMX) agents, to collect data from Java-based applications.</shortdesc>
+  <refbody>
+    <section>
+      <p>This ZenPack defines a data source named
+        <codeph outputclass="literal">JMX</codeph> that allows you to query any single or
+        complex-value attribute, or invoke an MBean operation. It also comes with
+        a built-in template named <codeph outputclass="literal">Java</codeph> that contains MBean
+        information for a few beans built into the JVM.</p><note>
+          <p>This ZenPack also includes a built-in template named
+            <codeph outputclass="literal">ZenJMX</codeph>. This template should be used only on devices
+            running Java applications that make information available through JMX.
+            To monitor other Java applications, use the included Java
+            template.</p>
+        </note><p>When the <cmdname>zenjmx</cmdname> daemon is started it communicates
+          with its <cmdname>zenhub</cmdname> daemon and retrieves a list of devices that possess
+          <codeph outputclass="literal">JMX</codeph> data sources. It also spawns a Java process. 
+          The <cmdname>zenjmx</cmdname> daemon asynchronously issues queries for each of those devices to the Java
+          process via XML-RPC. The Java process then collects the data from the Java
+          application to be monitored, and returns the results to the <cmdname>zenjmx</cmdname> daemon. Any
+          collection or configuration errors are sent as events to <ph conkeyref="names/platform"/> 
+          and  appear in the event console.</p>
+      <p>Also, the <cmdname>zenjmx</cmdname> daemon sends heartbeat data to its <cmdname>zenhub</cmdname> daemon 
+        after each collection attempt, to let <ph conkeyref="names/platform"/> know it is still alive and
+            well.</p>
+    </section>
+  </refbody>
+</reference>

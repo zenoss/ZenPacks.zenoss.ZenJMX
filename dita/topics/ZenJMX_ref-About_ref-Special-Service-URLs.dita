@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e669"><title>Special Service URLs</title><refbody><section><p>By default, URLs are assembled as:</p><codeblock outputclass="programlisting">service:jmx:rmi:///jndi/rmi://hostName:portNum/jmxrmi </codeblock><p>This host name and port points to a registry. After a JMX agent
+      connects to the registry, the registry tells the agent which host and
+      port to use for remote calls.</p><p>In some situations, you may want to explicitly provide the
+      registry host and port, as well as the host and port for the remote
+      calls. Use the long form, as in:</p><codeblock outputclass="programlisting">service:jmx:rmi://127.0.0.1:8999/jndi/rmi://127.0.0.1:8999/jmxrmi</codeblock></section></refbody></reference>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e196"><title>Single Value Attribute Calls</title><refbody><section><p>This is the most basic usage scenario. If you are interested in
+      retrieving a single value from an MBean in a JMX Agent, and the
+      attribute returns simple numeric data, you fall into the "single value
+      attribute" category. To define a single-value attribute call simply
+      provide the fully qualified name of your MBean and then provide the name
+      of the attribute in the <uicontrol outputclass="guilabel">Attribute Name</uicontrol> field of the
+      data source. Lastly, you must define a data point.</p><p>Some examples of this include the commonly referenced JDK
+      Threading information:</p><ul>
+        <li>
+          <p>MBean Name: java.lang:type=Threading</p>
+        </li>
+
+        <li>
+          <p>Attribute Name: ThreadCount</p>
+        </li>
+
+        <li>
+          <p>Data Points:</p>
+
+          <ul>
+            <li>
+              <p>ThreadCount (type: gauge)</p>
+            </li>
+          </ul>
+        </li>
+      </ul><p>Java uses lots of file descriptors during normal operation. The
+      number of open file descriptors the JVM is working with can be measured
+      using the following information:</p><ul>
+        <li>
+          <p>MBean Name: java.lang:type=OperatingSystem</p>
+        </li>
+
+        <li>
+          <p>Attribute Name: OpenFileDescriptorCount</p>
+        </li>
+
+        <li>
+          <p>Data Points:</p>
+
+          <ul>
+            <li>
+              <p>OpenFileDescriptorCount (type: gauge)</p>
+            </li>
+          </ul>
+        </li>
+      </ul><p>There are several other single-value attributes that can be
+      retrieved from the JDK. We recommend using <cmdname>JConsole</cmdname>
+      to interactively navigate through the MBean hierarchy to determine which
+      MBeans contain useful information to you. See  for additional information on how to
+      inspect the MBeans deployed in an JMX Agent.</p></section></refbody></reference>

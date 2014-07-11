@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e446"><title>No parameters, multiple values returned in Map format</title><refbody><section><p>In this scenario no parameters are passed to an operation, but
+        multiple response values are provided in a Map&lt;String, Object&gt;.
+        The keyset of the Map contains the names of data points that can be
+        defined, and the values are the values of said data points. When a
+        Map&lt;String, Object&gt; is returned you need not capture all of the
+        returned values as data points, and you can instead pick the exact
+        values you are interested in. To choose the values to capture you
+        simply define data points with the same names as Strings in the
+        keyset.</p><p>The following configuration demonstrates how to extract specific
+        data points from an operation that returns a Map&lt;String,
+        Object&gt;. The key item to note in this configuration is that
+        "dailyBalance" and "annualBalance" must be present as keys in the
+        returned Map&lt;String, Object&gt; and their values must be coercible
+        via the Double.valueOf(object.toString()) idiom.</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBalances()</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>dailyBalance (type: gauge)</p>
+              </li>
+
+              <li>
+                <p>annualBalance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul></section></refbody></reference>

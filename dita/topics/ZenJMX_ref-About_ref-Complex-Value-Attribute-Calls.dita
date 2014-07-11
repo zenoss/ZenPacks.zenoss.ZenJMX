@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e283"><title>Complex-Value Attribute Calls</title><refbody><section><p>If your MBean attribute defines multiple sub-attributes (via
+      CompositeData or Tabular) that you are interested in capturing, then you
+      fall into the category of a "complex-value attribute" call. The JDK
+      contains a few complex-value attributes you might be interested in
+      capturing, including garbage collection statistics that were captured
+      during the copy and mark-sweep compact collection cycles.</p><p>To extract data from a complex-value attribute, you must define
+      one or more data points in the data source. The names of the data points
+      are used as keys into the complex-value data structure returned from the
+      MBean attribute. For JMX CompositeData attributes, the data point names
+      are used as a key to map the results. For JMX TabularData, the data
+      point names are used as indexes into the structure to map the
+      result.</p><p>The JDK also provides heap memory information via a complex-value
+      attribute. The amount of committed, used, and maximum heap memory can be
+      viewed by setting up a complex-value attribute in <ph conkeyref="names/platform"/> with the following information:</p><ul>
+        <li>
+          <p>MBean Name: java.lang:type=Memory</p>
+        </li>
+
+        <li>
+          <p>Attribute Name: HeapMemoryUsage</p>
+        </li>
+
+        <li>
+          <p>Data Points:</p>
+
+          <ul>
+            <li>
+              <p>committed (type: gauge)</p>
+            </li>
+
+            <li>
+              <p>used (type: gauge)</p>
+            </li>
+
+            <li>
+              <p>max (type: gauge)</p>
+            </li>
+          </ul>
+        </li>
+      </ul></section></refbody></reference>

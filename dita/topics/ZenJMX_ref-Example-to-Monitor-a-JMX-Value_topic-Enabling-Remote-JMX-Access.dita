@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:topic" "topic.dtd">
+<topic id="d66e800"><title>Enabling Remote JMX Access</title><body><p>Each application server has a slightly different process for
+      enabling remote JMX Access. You should consult with your application
+      server for specific instructions. This section includes instructions for
+      a few commonly used configurations.</p><p>JMX agents can be configured in two ways: remote access and
+      local-only. When configured for remote access a JMX client communicates
+      with the JMX agent via a socket and uses a remote protocol such as
+      Remote Method Invocation (RMI) or JMXMP to access the MBeans. When
+      configured for local-only access the JMX agent periodically dumps
+      serialized MBeans to a temporary directory on the machine.
+      <cmdname>JConsole</cmdname> can be used to access JMX agents in
+        local-only mode as well as in remote mode. The <cmdname>zenjmx</cmdname> daemon can be used only with
+      remote servers via RMI or JMXMP and cannot work with local-only
+      serialized MBeans. This is not a significant limitation because the <cmdname>zenjmx</cmdname> daemon
+      can establish RMI connections to localhost in the same manner that it
+      creates connections to remote hosts.</p><p>The <keyword outputclass="envar">JAVA_OPTS</keyword> environment variable can be used to
+      enable remote access to JVM MBeans. Set it as follows:</p><codeblock outputclass="screen">JAVA_OPTS="-Dcom.sun.management.jmxremote.port=12345
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
+
+export JAVA_OPTS</codeblock><p>When starting an application pass the <keyword outputclass="envar">JAVA_OPTS</keyword>
+      variable as an argument to the JVM as follows:</p><codeblock outputclass="screen">java ${JAVA_OPTS} -classpath /path/to/application.jar com.yourcompany.Main</codeblock><p>You can then use <cmdname>JConsole</cmdname> to connect to
+      localhost:12345. Authentication can be configured by modifying the
+      java.security file as well as java.policy. There are lots of examples
+      available on the Internet that can provide guidance in how to achieve
+      authenticated remote access to JVM MBeans.</p></body></topic>

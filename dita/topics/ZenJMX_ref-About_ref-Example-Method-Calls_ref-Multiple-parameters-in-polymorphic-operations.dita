@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e606"><title>Multiple parameters in polymorphic operations</title><refbody><section><p>The preceding example describes how polymorphic behavior in Java functions and how method
+        resolution can be provided by identifying the Class[] that represents the parameters passed
+        to a method. The situation where multiple parameters are passed to a polymorphic operation
+        is no different then the situation where a single parameter is passed to a polymorphic
+        operation, except that the length of the Class[] and Object[] is greater than one.</p><p>When multiple parameters are required to invoke an operation you
+        must provide the fully qualified class names of each parameter's type
+        in comma delimited format, as well as the object values for each type
+        (also in comma delimited format).</p><p>The following example demonstrates a configuration that passes
+        two parameters to an MBean operation. The second parameter passed is a
+        default value to return if no account can be located matching the
+        first parameter.</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBalances()</p>
+          </li>
+
+          <li>
+            <p>Parameter Types: java.lang.String, java.lang.Integer</p>
+          </li>
+
+          <li>
+            <p>Parameter Values: sbb552349999, 0</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>balance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul><p>There are additional combinations that are possible with
+        polymorphic methods and the values they return, and those combinations
+        are left as an exercise for the reader to explore. The logic for
+        extracting results from multi-value operation invocations follows the
+        same rules as the logic for extracting results from a multi-value
+        attribute read. For additional information on the rules of that logic
+        see the section above on multi-value attributes.</p></section></refbody></reference>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e48"><title>JMX Background</title><refbody><section><p>The JMX technology is used throughout the Java Virtual Machine to
+      provide performance and management information to clients. Using a
+      combination of <cmdname>JConsole</cmdname> (Oracle's JMX client that is
+      shipped with the JDK) and JMX, a system operator can examine the number
+      of threads that are active in the JVM or change the log level. There are
+      numerous other performance metrics that can be gleaned from the JVM, as
+      well as several management interfaces that can be invoked that change
+      the behavior of the JVM.</p><p>In Java 5, Oracle introduced the Remote API for Java Management
+      Extensions. This enhancement defines an RMI wrapper around a JMX agent
+      and allows for independent client development. The <cmdname>zenjmx</cmdname> daemon accesses remote
+      JMX agents via the Remote API for Java Management Extensions. It
+      currently does not support local connections (provided via the temporary
+      directory) to JMX Agents. JMX also specifies the manner in which various
+      protocols can be used to connect to clients, and send and receive
+      information. The original, most commonly used protocol is RMI. The <cmdname>zenjmx</cmdname> daemon
+      supports RMI and JMXMP connections.</p></section></refbody></reference>

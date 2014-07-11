@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e103"><title>Allowable Parameter Types</title><refbody><section><p>The following primitive data types are allowed in
+      <codeph outputclass="literal">JMX</codeph> calls:</p><ul>
+        <li>
+          <p><codeph outputclass="literal">java.lang.Integer</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">java.lang.Long</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">java.lang.Double</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">java.lang.Float</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">java.lang.String</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">java.lang.Boolean</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">int</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">long</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">double</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">float</codeph></p>
+        </li>
+
+        <li>
+          <p><codeph outputclass="literal">boolean</codeph></p>
+        </li>
+      </ul></section></refbody></reference>
