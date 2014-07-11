@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e1076"><title>Monitor Values in TabularData and CompositeData Objects</title><refbody><section><p>The Attribute Path input value on the ZenJMX data source allows you
+    to monitor values nested in the TabularData and CompositeData complex open
+    data objects. Using this value you can specify a path to traverse and
+    index into these complex data structures.</p><p>If the result of traversing and extracting a value out of the nested
+    open data is a single numeric value then it is automatically mapped to the
+    datapoint in the data source. However, if the value from the open data is
+    another open data object then the data point names from the datasource are
+    used as indexes or keys to map values out of the open data.</p><p>The input value is a dot-separated string that represents a path
+    through the object. Non-bracketed values are keys into CompositeData.
+    Bracketed values are indexes into TabularData.</p><p>For TabularData indexes with more than one value, use a
+    comma-separated list with no spaces (for example, [key1,key2]).</p><p>To specify a column name (needed only when the table has more than
+    two columns) use curly brackets after the table index.</p></section><section><title>Example</title><p>To get the used Tenured Generation memory after the last garbage
+    collection from the Garbage Collector MBean, set the Attribute Name on the
+    datasource to lastGcInfo. Set the Attribute Path to:</p><codeblock outputclass="programlisting">memoryUsageAfterGc.[Tenured Gen].{value}.used </codeblock><p>The key <codeph outputclass="code">memoryUsageAfterGc</codeph> is evaluated against the
+    CompositeData returned from the <codeph outputclass="code">lastGcInfo</codeph> attribute. The
+    evaluation results in a TabularData object. Then, the <codeph outputclass="code">[Tenured
+    Gen]</codeph> index is evaluated against the TableData, which returns a row
+    in the table.</p><p>Since a row in the table can contain multiple columns, the key
+    <codeph outputclass="code">value</codeph> (in curly brackets) is used to pick a column in the
+    row. Lastly, the key <codeph outputclass="code">used</codeph> is evaluated against the
+    CompositeData in the column to return the memory value.</p><p>In this example, since the index being used for the tabular data is
+    not a multi-value index and so the column name is optional. The Attribute
+    Path can be written as:</p><codeblock outputclass="programlisting">memoryUsageAfterGc.[Tenured Gen].used</codeblock></section></refbody></reference>

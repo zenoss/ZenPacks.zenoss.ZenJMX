@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e1265">
+  <title>zenjmx Options</title>
+  <refbody>
+    <section>
+      <p>To display the options supported by the <cmdname>zenjmx</cmdname> daemon, enter the following command:</p>
+      <codeblock outputclass="programlisting">zenjmx help</codeblock>
+    </section>
+  </refbody>
+</reference>

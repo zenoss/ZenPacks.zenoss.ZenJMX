@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e63">
+  <title>ZenJMX Capabilities</title>
+  <refbody>
+    <section>
+      <p>The <cmdname>zenjmx</cmdname> daemon is a full-featured JMX client that works "out of the box"
+      with JMX agents that have their remote APIs enabled. It supports
+      authenticated and unauthenticated connections, and it can retrieve
+      single-value attributes, complex-value attributes, and the results of
+      invoking an operation. Operations with parameters are also supported so
+      long as the parameters are primitive types (Strings, booleans, numbers),
+      as well as the object version of primitives (such as
+      <codeph outputclass="literal">java.lang.Integer</codeph> and
+      <codeph outputclass="literal">java.lang.Float</codeph>). Multi-value responses from
+      operations (Maps and Lists) are supported, as are primitive responses
+      from operations.</p><p>The <codeph outputclass="literal">JMX</codeph> data source installed by this ZenPack allows you
+        to define the connection, authentication, and retrieval information you want to use to
+        retrieve performance information. The IP address is extracted from the parent device, but
+        the port number of the JMX Agent is configurable in each data source. This allows you to
+        operate multiple JMX Agents on a single device and retrieve performance information for each
+        agent separately. This is commonly used on production servers that run multiple
+        applications.</p><p>Authentication information is also associated with each JMX data
+      source. This offers the most flexibility for site administrators because
+      they can run some JMX agents in an open, unauthenticated fashion and
+      others in a hardened and authenticated fashion. SSL-wrapped connections
+      are supported by the underlying JMX Remote subsystem built into the JDK,
+      but were not tested in the <ph conkeyref="names/company"/> labs. As a result, your success with
+      SSL encrypted access to JMX Agents may vary.</p><p>The data source allows you to define the type of performance
+      information you want to achieve: single-value attribute, complex-value
+      attribute, or operation invocation. To specify the type of retrieval,
+      you must specify an attribute name (and one or more data points) or
+      provide operation information.</p><p>Any numerical value returned by a JMX agent can be retrieved by
+      <ph conkeyref="names/platform"/> and graphed and checked against thresholds.
+      Non-numerical values (Strings and complex types) cannot be retrieved and
+      stored by <ph conkeyref="names/platform"/>.</p><p>When setting up data points, make sure you understand the
+      semantics of the attribute name and choose the correct <ph conkeyref="names/platform"/> data point type. Many JMX Agent
+      implementations use inconsistent nomenclature when describing
+      attributes. In some cases the term "Count" refers to an ever-increasing
+      number (a "Counter" data point type). In other cases the term "Count"
+      refers to a snapshot number (a "Gauge" data point type).</p></section></refbody></reference>

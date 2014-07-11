@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e392">
+  <title>No parameters, multiple values returned in List format</title>
+  <refbody>
+    <section>
+      <p>In this scenario no parameters are passed to an operation, but
+        multiple response values are provided in a List. The values returned
+        are expressed in a List&lt;Object&gt;, but they are coerced (but not
+        casted) to doubles prior to being stored in <ph conkeyref="names/platform"/>. This means that returning a numeric value
+        as "1234" will work, but "1,234" will not work. The litmus test is to
+        evaluate if <codeph outputclass="code">Double.valueOf(object.toString())</codeph> will
+        successfully evaluate.</p><p>The <cmdname>zenjmx</cmdname> daemon can be configured to read multiple values from an
+        operation's results by defining multiple data points. You must define
+        a data point for each value returned from the operation, and if there
+        is a mismatch between the number of data points you define and the
+        size of the List&lt;Object&gt; returned an exception will be
+        generated. The configuration for the <cmdname>zenjmx</cmdname> daemon follows:</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBalanceSummary()</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>dailyBalance (type: gauge)</p>
+              </li>
+
+              <li>
+                <p>annualBalance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul></section></refbody></reference>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e1286"><title>ZenJMX Logging</title><refbody><section><p>You can adjust logging levels to reduce the size of ZenJMX log
+    files. In the <filepath>log4j.properties</filepath> file (in
+    <filepath>$ZENHOME/Products/ZenJMX</filepath>), update the first line and
+    change DEBUG to INFO, WARN, or ERROR.</p></section></refbody></reference>

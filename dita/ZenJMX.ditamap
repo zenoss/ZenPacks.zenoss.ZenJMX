@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:map" "map.dtd">
+<map>
+   <title>ZenJMX</title>
+   <topicref href="topics/ZenJMX.dita">
+     <topicref href="topics/ZenJMX_ref-About_ref-JMX-Background.dita"/>
+     <topicref href="topics/ZenJMX_ref-About_ref-ZenJMX-Capabilities.dita"/>
+     <topicref href="topics/ZenJMX_ref-About_ref-Allowable-Parameter-Types.dita"/>
+     <topicref href="topics/ZenJMX_ref-About_ref-Single-Value-Attribute-Calls.dita"/>
+     <topicref href="topics/ZenJMX_ref-About_ref-Complex-Value-Attribute-Calls.dita"/>
+     <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls.dita">
+        <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls_ref-No-parameters,-single-return-value.dita"/>
+        <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls_ref-No-parameters,-multiple-values-returned-in-List-format.dita"/>
+        <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls_ref-No-parameters,-multiple-values-returned-in-Map-format.dita"/>
+        <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls_ref-Single-parameter-in-polymorphic-operation.dita"/>
+        <topicref href="topics/ZenJMX_ref-About_ref-Example-Method-Calls_ref-Multiple-parameters-in-polymorphic-operations.dita"/>
+     </topicref>
+     <topicref href="topics/ZenJMX_ref-About_ref-Special-Service-URLs.dita"/>
+      
+      <topicref href="topics/prerequisites.dita"/>
+      <topicref href="topics/ZenJMX_ref-Oracle-Java-Runtime-Environment-(JRE).dita"/>
+      <topicref href="topics/ZenJMX_ref-Example-to-Monitor-a-JMX-Value.dita">
+         <topicref href="topics/ZenJMX_ref-Example-to-Monitor-a-JMX-Value_topic-Enabling-Remote-JMX-Access.dita"/>
+         <topicref href="topics/ZenJMX_ref-Example-to-Monitor-a-JMX-Value_task-Configure-with-a-Custom-Data-Source.dita"/>
+      </topicref>
+      <topicref href="topics/ZenJMX_ref-Monitor-Values-in-TabularData-and-CompositeData-Objects.dita"/>
+      <topicref href="topics/JConsole.dita"/>
+      <topicref href="topics/ZenJMX_ref-ZenJMX-Options.dita">
+         <topicref href="topics/ZenJMX_ref-Memory-Allocation.dita"/>
+         <topicref href="topics/ZenJMX_ref-ZenJMX-Logging.dita"/>
+      </topicref>
+      <topicref href="topics/ZenJMX_ref-Daemons.dita"/>
+   </topicref>
+</map>

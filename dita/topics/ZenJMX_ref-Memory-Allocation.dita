@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e1277"><title>Memory Allocation</title><refbody><section>
+  <p>Use the <codeph>--javaheap</codeph> option to set the max heap. The
+    value is 512MB.</p></section></refbody></reference>

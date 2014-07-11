@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e342"><title>Example Method Calls</title><refbody><section><p>Some management values need to be computed. These situations
+      frequently arise when custom MBeans are deployed alongside an enterprise
+      application. An MBean named "Accounting" might be deployed within an
+      enterprise application that defines operations intended for operators or
+      support staff. These operations might include methods such as
+      "getBankBalance()" or "countTotalDeposits()".</p>
+  <p>The <cmdname>zenjmx</cmdname> daemon can invoke operations, but there are some
+      subtleties in how it sends parameters to a JMX Agent, and
+      interprets the response.</p></section></refbody></reference>

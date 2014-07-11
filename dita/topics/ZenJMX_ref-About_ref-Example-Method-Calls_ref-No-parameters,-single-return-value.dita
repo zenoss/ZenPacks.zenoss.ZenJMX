@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d66e353"><title>No parameters, single return value</title><refbody><section><p>In the most basic usage scenario no arguments are passed to the
+        operation and a single value is returned. This usage scenario is very
+        similar to a single-value attribute call, except we're invoking an
+        operation to retrieve the value rather than accessing an attribute.
+        The configuration for this hypothetical usage scenario follows:</p><ul>
+          <li>
+            <p>MBean Name:
+            Application:Name=Accounting,Type=Accounting</p>
+          </li>
+
+          <li>
+            <p>Operation Name: getBankBalance()</p>
+          </li>
+
+          <li>
+            <p>Data Points:</p>
+
+            <ul>
+              <li>
+                <p>balance (type: gauge)</p>
+              </li>
+            </ul>
+          </li>
+        </ul></section></refbody></reference>
