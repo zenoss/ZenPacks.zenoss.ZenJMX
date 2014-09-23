@@ -1,0 +1,4 @@
+*.egg-info
+*.pyc
+ZenPacks/zenoss/ZenJMX/lib/
+ZenPacks/zenoss/ZenJMX/@@ZENJMX_LOGFILE@@
