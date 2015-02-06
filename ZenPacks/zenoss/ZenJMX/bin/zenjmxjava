@@ -54,6 +54,16 @@ sed -e "s@\(LOGFILE.File=\).*@\1${LOGPATH}/zenjmx.log@" ${LOG4J_PROPS} \
     > ${LOG4J_PROPS}.new && \
     mv ${LOG4J_PROPS}.new ${LOG4J_PROPS}
 
+
+TRUSTPATH=`awk '/^truststore/ { print $2; }' ${CFGFILE}`
+if [ -z "${TRUSTPATH}" ]; then
+   TRUSTPATH=${ZENHOME}/etc/truststore
+fi
+
+if [ -f "${TRUSTPATH}" ]; then
+    DEFAULT_ZENJMX_JVM_ARGS="${DEFAULT_ZENJMX_JVM_ARGS}  -Djavax.net.ssl.trustStore=${TRUSTPATH}"
+fi
+
 # these variables must be set (this includes CLASSPATH, which is set above)
 ZENJMX_JAR=${LIB_DIR}/zenjmx.jar
 START_ARGS="--configfile ${CFGFILE} $@"
