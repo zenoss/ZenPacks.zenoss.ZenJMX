@@ -584,12 +584,18 @@ class ZenJMXTask(ObservableMixin):
         rrdConf = dsConfig.rrdConfig.get(dataPointId)
         type = rrdConf.rrdType
         if(type in ('COUNTER', 'DERIVE')):
-            parts = str(dpValue).split('.')
-            if len(parts) == 2 and int(parts[1]) == 0:
-                #if the value just has trailing zeros treat as int
-                dpValue = int(float(dpValue))
-            elif len(parts)>=2:
+            try:
+                # cast to float first because long('100.0') will fail with a
+                # ValueError
+                dpValue = long(float(dpValue))
+            except (TypeError, ValueError):
                 log.warning("value %s not valid for derive or counter data points", dpValue)
+        else:
+            try:
+                dpValue = float(dpValue)
+            except (TypeError, ValueError):
+                log.warning("value %s not valid for data point", dpValue)
+
         if not rrdConf:
             log.info(
                 'No RRD config found for device %s datasource %s datapoint %s' \
