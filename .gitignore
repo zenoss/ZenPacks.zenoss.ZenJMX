@@ -1,4 +1,10 @@
-*.egg-info
 *.pyc
+*.swp
+*.egg-info
+*.cfg
+dist
+build
+lib
+@@ZENJMX_LOGFILE@@
 ZenPacks/zenoss/ZenJMX/lib/
 ZenPacks/zenoss/ZenJMX/@@ZENJMX_LOGFILE@@

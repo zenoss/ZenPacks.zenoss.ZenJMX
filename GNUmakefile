@@ -20,6 +20,9 @@ build:
 	cd ZenPacks/zenoss/ZenJMX; make install
 
 
+test:
+	runtests ZenPacks.zenoss.ZenJMX
+
 clean:
 	rm -rf build dist temp
 	rm -rf *.egg-info
