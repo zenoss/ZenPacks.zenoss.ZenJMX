@@ -70,7 +70,8 @@ public class ConfigAdapter {
     }
 
     public String getJmxPort() {
-        return configMap.get("jmxPort").toString();
+        Object p = configMap.get("jmxPort");
+        return p != null ? p.toString() : null;
     }
 
     public String getJmxRawService() {
