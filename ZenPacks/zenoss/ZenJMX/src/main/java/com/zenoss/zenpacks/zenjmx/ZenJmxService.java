@@ -280,10 +280,9 @@ public class ZenJmxService {
 
     private Map<String, String> createUnexpectedError(ConfigAdapter config,
                                                       Throwable e) {
-      String msg = "Unexpected Error";
       Utility.debugStack(e);
-      String errorMsg = "%1$s; Exception %3$s ";
-      errorMsg = String.format(errorMsg, msg,e.getMessage());
+      String errorMsg = "Unexpected Error; Exception %s ";
+      errorMsg = String.format(errorMsg, e.getMessage());
       HashMap<String, String> error = createDeviceError(config, errorMsg);
       error.put(ConfigAdapter.EVENT_CLASS, "/Status/JMX");
       error.put(ConfigAdapter.EVENT_KEY, "unexpected_error");

@@ -488,8 +488,18 @@ class ZenJMXTask(ObservableMixin):
             port = self._client.listenPort
             xmlRpcProxy = xmlrpc.Proxy('http://localhost:%s/' % port)
             d = xmlRpcProxy.callRemote('zenjmx.collect', configMaps)
-            d.addCallback( processResults )
+            d.addCallbacks( processResults , processRpcError)
             return d
+
+        def processRpcError(error):
+            log.debug("Could not make XML RPC call for device %s; content of call: %s", self._taskConfig, configMaps)
+            self.sendEvent({}, severity=Event.Error,
+                                eventClass='/Status/JMX',
+                                summary='unexpected error: %s' % error.getErrorMessage(),
+                                eventKey='unexpected_xmlrpc_error',
+                                device=self.configId)
+            return error
+
 
         def processResults(jmxResults):
             """
@@ -498,6 +508,14 @@ class ZenJMXTask(ObservableMixin):
             @param jmxResults: jmxResults
             @type jmxResults: string
             """
+
+            #Send clear for RPC error
+            self.sendEvent({}, severity=Event.Clear,
+                                eventClass='/Status/JMX',
+                                summary='unexpected error cleared',
+                                eventKey='unexpected_xmlrpc_error',
+                                device=self.configId)
+
             result = {}
             hasConnectionError = False
             hasUnexpectedError = False
