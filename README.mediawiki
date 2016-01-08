@@ -1,0 +1,5 @@
+== Changes ==
+
+;3.12.1
+* Create events for XML-RPC errors. (ZEN-21392)
+* Fix reporting of unexpected errors. (ZEN-21472)
