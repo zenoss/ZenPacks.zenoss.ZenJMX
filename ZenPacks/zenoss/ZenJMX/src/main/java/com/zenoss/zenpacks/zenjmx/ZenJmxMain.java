@@ -19,7 +19,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.xmlrpc.webserver.XmlRpcServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -80,7 +79,7 @@ public class ZenJmxMain {
 
         ServletHandler handler = new ServletHandler();
 
-        ServletHolder holder = new ServletHolder(new XmlRpcServlet());
+        ServletHolder holder = new ServletHolder(new ZenXmlRpcServlet());
         handler.addServletWithMapping(holder, "/");
         // handler.start();
         handler.initialize();
