@@ -1,5 +1,8 @@
 == Changes ==
 
+;3.13.1
+* Create migration to add new volume zenjmx-libs (ZPS-7217)
+
 ;3.13.0
 * zenjmx port 9988 might pose a security risk (ZEN-17033)
 * fix build of the zenpack on java 11 (ZPS-7192)
