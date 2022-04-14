@@ -17,8 +17,9 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.LogManager;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -61,7 +62,7 @@ public class ZenJmxMain {
             if ( level != null )
                 {
                 _logger.info("setting root logger to " + level);
-                Logger.getRootLogger().setLevel(level);
+                Configurator.setLevel(LogManager.getLogger(ZenJmxMain.class).getName(), level);
                 }
             else
                 {
