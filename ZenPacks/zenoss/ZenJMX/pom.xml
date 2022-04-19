@@ -116,9 +116,6 @@
               <addClasspath>true</addClasspath>
               <mainClass>com.zenoss.zenpacks.zenjmx.ZenJmxMain</mainClass>
             </manifest>
-            <manifestEntries>
-              <Class-Path>jmxremote_optional.jar</Class-Path>
-            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
