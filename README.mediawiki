@@ -1,5 +1,10 @@
 == Changes ==
 
+;3.14.0
+* JMX Remote Operational jar file appears to have non-compliant license (ZPS-1824)
+* Update Log4j version (ZPS-7966)
+* XML External Entity vulnerability in zenjmx service (ZPS-5765)
+
 ;3.13.1
 * Create migration to add new volume zenjmx-libs (ZPS-7217)
 
