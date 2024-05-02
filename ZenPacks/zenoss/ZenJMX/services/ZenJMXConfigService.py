@@ -14,7 +14,7 @@ import md5
 import Globals
 from Products.ZenUtils.ZenTales import talesEval
 from Products.ZenEvents.ZenEventClasses import Error, Clear
-from Products.ZenCollector.services.config import CollectorConfigService
+from Products.ZenCollector.services.config import CollectorConfigService, DeviceProxy
 
 from ZenPacks.zenoss.ZenJMX.datasources.JMXDataSource import JMXDataSource
 
@@ -40,7 +40,7 @@ class RRDConfig(pb.Copyable, pb.RemoteCopy):
 pb.setUnjellyableForClass(RRDConfig, RRDConfig)
 
 
-class JMXDeviceConfig(pb.Copyable, pb.RemoteCopy):
+class JMXDeviceConfig(DeviceProxy):
     """
     Represents the configuration for a device.
     Contains a list of JMXDataSourceConfig objects
@@ -167,6 +167,18 @@ class ZenJMXConfigService(CollectorConfigService):
                                         instance,
                                         attributes)
         self._ds_errors = {}
+
+    def _filterDevice(self, device):
+        include = CollectorConfigService._filterDevice(self, device)
+        # Check datasources on the device level
+        has_jmx_ds = any(template.getRRDDataSources("JMX") for template in device.getRRDTemplates())
+        # Check datasources on the components level
+        if not has_jmx_ds:
+            has_jmx_ds = any(template.getRRDDataSources("JMX")
+                                  for component in device.getMonitoredComponents()
+                                  for template in component.getRRDTemplates())
+
+        return include and has_jmx_ds
 
     def _get_ds_conf(self, device, component, template, ds):
         component_id = None if (component is None) else component.id
