@@ -1,5 +1,8 @@
 == Changes ==
 
+;3.14.1
+* Make ZenJMX ZenPack compatible with Ubuntu-based CZ 7.2.0 (ZPS-8590)
+
 ;3.14.0
 * JMX Remote Operational jar file appears to have non-compliant license (ZPS-1824)
 * Update Log4j version (ZPS-7966)
